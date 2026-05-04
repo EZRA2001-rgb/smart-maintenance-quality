@@ -1,0 +1,38 @@
+name: CI/CD Pipeline with Quality Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ci:
+    name: CI/CD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install and setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: NPM install
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint || true  # Non-fatal for scan, but flags issues
+
+      - name: Run Tests
+        run: npm test
+
+      - name: SonarCloud Scan & Quality Gate
+        uses: SonarSource/sonarcloud-github-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+

@@ -1,23 +1,15 @@
-# SmartMaintenance - SonarCloud Setup
+# SmartMaintenance Quality - Progress Tracker
 
-## Étape 1 + SonarCloud ✅
+## Completed
+- [x] Git init/push to GitHub
+- [x] Étape 1: Spaghetti code
+- [x] Étape 2: ESLint + SonarCloud setup/scan (high complexity 34, 0% coverage)
+- [x] Fix workflow/ESLint for scan
 
-✅ Code spaghetti pushed GitHub: https://github.com/Ezra12363/smart-maintenance-quality
+## Étape 3: CI/CD Quality Gate (In Progress)
+1. [ ] Manual: SonarCloud Quality Gate (V(G)>10 fail, coverage<70% fail)
+2. [x] Create ci.yml workflow
+3. [ ] Crash test (push fails red X)
 
-✅ sonar-project.properties + GitHub Action créés.
-
-⏳ sonar-scanner installé globalement.
-
-**Next: Lancer scan local**
-```
-sonar-scanner
-```
-
-Puis view https://sonarcloud.io/dashboard?id=smart-maintenance-quality (login GitHub).
-
-Expected: Complexity haute, coverage 0%, Quality Gate FAIL.
-
-Push changes: `git add . && git commit -m "Add SonarCloud config" && git push`
-
-
-
+## Next
+- Push ci.yml to trigger/test fail
