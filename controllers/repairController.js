@@ -118,7 +118,8 @@ function calculateEstimate(req, res) {
                 if (vehicleAge > 10) {
                     if (partsCost > 0) {
                         // Déjà appliqué plus haut, mais condition inutile
-                        partsCost = partsCost;
+// Discount already applied, no change needed
+partsCost = partsCost;
                     }
                 }
             } else {
