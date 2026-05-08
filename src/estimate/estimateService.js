@@ -6,7 +6,7 @@
 function getNumber(value) {
   if (typeof value === 'number' && Number.isFinite(value)) return value;
   const n = Number(value);
-  return Number.isFinite(n) ? n : NaN;
+  return Number.isFinite(n) ? n : Number.NaN;
 }
 
 function computeLabor({ problemType, hoursWorked, isUrgent }) {
