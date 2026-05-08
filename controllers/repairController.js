@@ -87,44 +87,16 @@ function calculateEstimate(req, res) {
             
             for (let i = 0; i < partsReplaced.length; i++) {
                 const part = partsReplaced[i];
-                if (part.price) {
-                    // Vérification de la remise pour véhicule âgé
-                    if (vehicleAge > 10) {
-                        if (part.price > 0) {
-                            const discountedPrice = part.price * 0.85;
-                            totalPartsPrice = totalPartsPrice + discountedPrice;
-                        } else {
-                            totalPartsPrice = totalPartsPrice + part.price;
-                        }
-                    } else {
-                        if (vehicleAge <= 10) {
-                            if (part.price > 0) {
-                                totalPartsPrice = totalPartsPrice + part.price;
-                            } else {
-                                totalPartsPrice = totalPartsPrice + 0;
-                            }
-                        } else {
-                            totalPartsPrice = totalPartsPrice + part.price;
-                        }
-                    }
-                }
+                const price = typeof part?.price === 'number' ? part.price : Number(part?.price);
+                if (!Number.isFinite(price) || price <= 0) continue;
+
+                // Remise véhicule âgé uniquement si age > 10
+                const discountedPrice = vehicleAge > 10 ? price * 0.85 : price;
+                totalPartsPrice += discountedPrice;
             }
-            
+
             // Ajout de la marge garage de 20%
-            if (totalPartsPrice > 0) {
-                partsCost = totalPartsPrice * 1.20;
-                
-                // Vérification supplémentaire pour la remise (redondante)
-                if (vehicleAge > 10) {
-                    if (partsCost > 0) {
-                        // Déjà appliqué plus haut, mais condition inutile
-// Discount already applied, no change needed
-partsCost = partsCost;
-                    }
-                }
-            } else {
-                partsCost = 0;
-            }
+            partsCost = totalPartsPrice > 0 ? totalPartsPrice * 1.20 : 0;
         } else {
             partsCost = 0;
             if (!problemType) {
