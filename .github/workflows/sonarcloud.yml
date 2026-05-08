@@ -33,6 +33,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: false
+      - name: Debug npm
+        run: npm -v
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1
